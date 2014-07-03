@@ -4,9 +4,10 @@
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+<!--    <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/salesdb</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sales_db</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
@@ -18,9 +19,12 @@
     <!-- Master Object  -->
     <mapping class="inc.cygnus.model.Customer"/>
     <mapping class="inc.cygnus.model.Product"/>
+    <mapping class="inc.cygnus.model.Author"/>
+    <mapping class="inc.cygnus.model.Book"/>
 
     <!-- Transaction Object  -->
-    <!-- <mapping class="com.cygnus.app.model.Purchase"/> -->
+    <mapping class="inc.cygnus.model.Purchase"/> 
+    <mapping class="inc.cygnus.model.PurchaseDetail"/> 
     
   </session-factory>
 </hibernate-configuration>

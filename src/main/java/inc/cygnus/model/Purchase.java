@@ -3,16 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package inc.cygnus.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 import org.joda.time.DateTime;
 
 /**
@@ -22,26 +27,34 @@ import org.joda.time.DateTime;
 @Entity
 @Table(name = "purchase")
 public class Purchase implements Serializable {
-    
+
     @Id
     @GeneratedValue
-    @Column(name="ID")
+    @Column(name = "ID")
     private Long id;
-    @Column(name="DATE")
+
+    @Column(name = "DATE")
     private DateTime date;
-    @Column(name="CUSTOMER_ID")
-    private Long customerId;
-    @Column(name="TOTAL_PURCHASE")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CUSTOMER_ID")
+    private Customer customer;
+
+    @Column(name = "TOTAL_PURCHASE")
     private BigDecimal totalPurchase;
 
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    private List<PurchaseDetail> purchaseDetails;
+
     public Purchase() {
-        
+
     }
 
-    public Purchase(Long id, DateTime date, Long customerId, BigDecimal totalPurchase) {
+    public Purchase(Long id, DateTime date, Customer customer, BigDecimal totalPurchase) {
         this.id = id;
         this.date = date;
-        this.customerId = customerId;
+        this.customer = customer;
         this.totalPurchase = totalPurchase;
     }
 
@@ -61,12 +74,12 @@ public class Purchase implements Serializable {
         this.date = date;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public BigDecimal getTotalPurchase() {
@@ -77,4 +90,12 @@ public class Purchase implements Serializable {
         this.totalPurchase = totalPurchase;
     }
 
+    public List<PurchaseDetail> getPurchaseDetails() {
+        return purchaseDetails;
+    }
+
+    public void setPurchaseDetails(List<PurchaseDetail> purchaseDetails) {
+        this.purchaseDetails = purchaseDetails;
+    }
+    
 }

@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -116,7 +117,12 @@ public class CustomerListForm extends javax.swing.JInternalFrame {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            return listCustomer.get(columnIndex).getClass();
+            @SuppressWarnings("unchecked")
+            Class<CustomerTableModel>[] columnTypes = new Class[] {
+                Long.class, String.class, Date.class, Date.class //, String.class
+            };
+        
+            return columnTypes[columnIndex];
         }
 
         @Override
